@@ -10,7 +10,6 @@ func Now() string {
 	return time.Now().Format(TimeFormat)
 }
 
-
 // SubTime 获取时间差
 func SubTime(startTime, endTime string) string {
 	s1, _ := time.ParseInLocation(TimeFormat, startTime, time.Local)
@@ -41,4 +40,3 @@ func RuntimeAge(second int64) string {
 		return fmt.Sprintf("%vd%vh", d, h)
 	}
 }
-
