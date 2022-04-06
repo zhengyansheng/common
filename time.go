@@ -1,9 +1,9 @@
 package common
 
 import (
+	"errors"
 	"fmt"
 	"time"
-	"errors"
 )
 
 // Now 获取当前日期
@@ -13,18 +13,18 @@ func Now() string {
 
 // SubTime 获取时间差
 func SubTime(startTime, endTime string) string {
-	s1, _ := time.ParseInLocation(TimeFormat, startTime, time.Local)
-	s2, _ := time.ParseInLocation(TimeFormat, endTime, time.Local)
+	s1, _ := time.ParseInLocation(SecLocalTimeFormat, startTime, time.Local)
+	s2, _ := time.ParseInLocation(SecLocalTimeFormat, endTime, time.Local)
 	return s2.Sub(s1).String()
 }
 
-// SubTime 求2个时间差
+// SubTimeInterval 求2个时间差
 func SubTimeInterval(startTime, endTime string) (m int64, err error) {
-	st1, err := time.ParseInLocation("2006-01-02 15:04:05", startTime, time.Local)
+	st1, err := time.ParseInLocation(SecLocalTimeFormat, startTime, time.Local)
 	if err != nil {
 		return
 	}
-	et2, err := time.ParseInLocation("2006-01-02 15:04:05", endTime, time.Local)
+	et2, err := time.ParseInLocation(SecLocalTimeFormat, endTime, time.Local)
 	if err != nil {
 		return
 	}
