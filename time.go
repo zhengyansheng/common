@@ -8,7 +8,7 @@ import (
 
 // Now 获取当前日期
 func Now() string {
-	return time.Now().Format(TimeFormat)
+	return time.Now().Format(SecLocalTimeFormat)
 }
 
 // SubTime 获取时间差
