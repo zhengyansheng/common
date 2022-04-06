@@ -5,8 +5,7 @@ import (
 	"fmt"
 )
 
-func Gen(str string) string {
-	data := []byte(str)
-	has := md5.Sum(data)
+func Md5(b []byte) string {
+	has := md5.Sum(b)
 	return fmt.Sprintf("%x", has)
 }
