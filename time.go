@@ -17,7 +17,7 @@ func SubTime(startTime, endTime string) string {
 	return s2.Sub(s1).String()
 }
 
-// RuntimeAge pod runtime interval
+// RuntimeAge 获取Pod运行时长
 func RuntimeAge(second int64) string {
 	minSeconds := int64(60)
 	hoursSeconds := minSeconds * 60
