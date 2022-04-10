@@ -7,13 +7,13 @@ import (
 
 // Now 获取当前日期
 func Now() string {
-	return time.Now().Format(TimeFormat)
+	return time.Now().Format(SecLocalTimeFormat)
 }
 
 // SubTime 获取时间差
 func SubTime(startTime, endTime string) string {
-	s1, _ := time.ParseInLocation(TimeFormat, startTime, time.Local)
-	s2, _ := time.ParseInLocation(TimeFormat, endTime, time.Local)
+	s1, _ := time.ParseInLocation(SecLocalTimeFormat, startTime, time.Local)
+	s2, _ := time.ParseInLocation(SecLocalTimeFormat, endTime, time.Local)
 	return s2.Sub(s1).String()
 }
 

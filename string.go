@@ -41,4 +41,3 @@ func CustomUnitGiInter(s interface{}) (float64, error) {
 		return 0, errors.New(fmt.Sprintf("args interface value %v not string", s))
 	}
 }
-
