@@ -1,6 +1,7 @@
 package common
 
 import (
+	"errors"
 	"fmt"
 	"time"
 )
@@ -17,7 +18,26 @@ func SubTime(startTime, endTime string) string {
 	return s2.Sub(s1).String()
 }
 
-// RuntimeAge pod runtime interval
+// SubTimeInterval 求2个时间差
+func SubTimeInterval(startTime, endTime string) (m int64, err error) {
+	st1, err := time.ParseInLocation(SecLocalTimeFormat, startTime, time.Local)
+	if err != nil {
+		return
+	}
+	et2, err := time.ParseInLocation(SecLocalTimeFormat, endTime, time.Local)
+	if err != nil {
+		return
+	}
+	if st1.Before(et2) {
+		m = (et2.Unix() - st1.Unix()) / 60
+		return
+	} else {
+		err = errors.New("startTime不能大于endTime")
+		return
+	}
+}
+
+// RuntimeAge 获取Pod运行时长
 func RuntimeAge(second int64) string {
 	minSeconds := int64(60)
 	hoursSeconds := minSeconds * 60
