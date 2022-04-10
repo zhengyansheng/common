@@ -60,3 +60,10 @@ func RuntimeAge(second int64) string {
 		return fmt.Sprintf("%vd%vh", d, h)
 	}
 }
+
+// ParseMilliTimestamp 毫秒转日期
+func ParseMilliTimestamp(tm int64) string {
+	sec := tm / 1000
+	msec := tm % 1000
+	return time.Unix(sec, msec*int64(time.Millisecond)).Format(SecLocalTimeFormat)
+}
