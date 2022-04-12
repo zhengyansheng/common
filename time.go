@@ -32,7 +32,7 @@ func SubTimeInterval(startTime, endTime string) (m int64, err error) {
 		m = (et2.Unix() - st1.Unix()) / 60
 		return
 	} else {
-		err = errors.New("startTime不能大于endTime")
+		err = errors.New(fmt.Sprintf("startTime: %v不能大于endTime: %v", startTime, endTime))
 		return
 	}
 }
