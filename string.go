@@ -7,6 +7,18 @@ import (
 	"strings"
 )
 
+// SplitEmail 郑彦生(zhengyansheng@xxx.com)
+func SplitEmail(s string) (info map[string]string, err error) {
+	info = make(map[string]string)
+	if !strings.Contains(s, "(") {
+		return
+	}
+	emails := strings.Split(s, "(")
+	info["alias"] = emails[0]
+	info["email"] = strings.Trim(emails[1], ")")
+	return
+}
+
 // CustomUnitGi 转换 cpu/memory 到 uint
 func CustomUnitGi(s string) (float64, error) {
 	if ok := strings.HasSuffix(s, "m"); ok {
