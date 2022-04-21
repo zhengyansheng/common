@@ -10,3 +10,15 @@ func Contains(s []string, str string) bool {
 
 	return false
 }
+
+// SliceTrimSpace 删除 slice 中的空元素
+func SliceTrimSpace(s []string) []string {
+	var opt []string
+	for _, t := range s {
+		if t == "" {
+			continue
+		}
+		opt = append(opt, t)
+	}
+	return opt
+}
