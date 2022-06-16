@@ -13,12 +13,17 @@ type Template struct {
 	Text string      // 模版文件
 }
 
+func unescaped(str string) template.HTML { return template.HTML(str) }
+
 func (t *Template) ParseTpl() (tplData string, err error) {
 	var (
 		optSlice []string
 		buf      bytes.Buffer
 	)
-	parse, err := template.New(t.Name).Parse(t.Text)
+
+	tpl := template.New(t.Name)
+	tpl = tpl.Funcs(template.FuncMap{"unescaped": unescaped})
+	parse, err := tpl.Parse(t.Text)
 	if err != nil {
 		return
 	}
