@@ -18,6 +18,13 @@ func SubTime(startTime, endTime string) string {
 	return s2.Sub(s1).String()
 }
 
+// SubTimeSeconds 获取时间秒数
+func SubTimeSeconds(startTime, endTime string) int64 {
+	s1, _ := time.ParseInLocation(SecLocalTimeFormat, startTime, time.Local)
+	s2, _ := time.ParseInLocation(SecLocalTimeFormat, endTime, time.Local)
+	return int64(s2.Sub(s1).Seconds())
+}
+
 // SubTimeInterval 求2个时间差
 func SubTimeInterval(startTime, endTime string) (m int64, err error) {
 	st1, err := time.ParseInLocation(SecLocalTimeFormat, startTime, time.Local)
@@ -29,8 +36,17 @@ func SubTimeInterval(startTime, endTime string) (m int64, err error) {
 		return
 	}
 	if st1.Before(et2) {
-		m = (et2.Unix() - st1.Unix()) / 60
+		unixSeconds := et2.Unix() - st1.Unix()
+		fmt.Println(unixSeconds, 24*3600)
+		// day 24 * 3600
+		if unixSeconds > 24*3600 {
+			m = unixSeconds / (24 * 3600)
+		} else {
+			// hour
+			m = unixSeconds / 60
+		}
 		return
+
 	} else {
 		err = errors.New(fmt.Sprintf("startTime: %v不能大于endTime: %v", startTime, endTime))
 		return
@@ -66,4 +82,44 @@ func ParseMilliTimestamp(tm int64) string {
 	sec := tm / 1000
 	msec := tm % 1000
 	return time.Unix(sec, msec*int64(time.Millisecond)).Format(SecLocalTimeFormat)
+}
+
+type TimeInterval struct {
+	StartTime string `json:"start_time"`
+	Result    string `json:"result"`
+}
+
+func NewTimeInterval(startTime string) *TimeInterval {
+	return &TimeInterval{
+		StartTime: startTime,
+		Result:    "",
+	}
+}
+
+func (t *TimeInterval) Sub() string {
+	startTime, _ := time.ParseInLocation(SecLocalTimeFormat, t.StartTime, time.Local)
+	seconds := int64(time.Now().Sub(startTime).Seconds())
+	return t.interval(seconds)
+}
+
+func (t *TimeInterval) interval(seconds int64) string {
+	if seconds > 86400 {
+		days := int(seconds / 86400)
+		remainSeconds := seconds % 86400
+		t.Result += fmt.Sprintf("%vd", days)
+		t.interval(remainSeconds)
+	} else if seconds > 3600 {
+		hours := int(seconds / 3600)
+		remainSeconds := seconds % 3600
+		t.Result += fmt.Sprintf("%vh", hours)
+		t.interval(remainSeconds)
+	} else if seconds > 60 {
+		mins := int(seconds / 60)
+		remainSeconds := seconds % 60
+		t.Result += fmt.Sprintf("%vm", mins)
+		t.interval(remainSeconds)
+	} else {
+		t.Result += fmt.Sprintf("%vs", seconds)
+	}
+	return t.Result
 }
