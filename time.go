@@ -106,20 +106,20 @@ func (t *TimeInterval) interval(seconds int64) string {
 	if seconds > 86400 {
 		days := int(seconds / 86400)
 		remainSeconds := seconds % 86400
-		t.Result += fmt.Sprintf("%vd", days)
+		t.Result += fmt.Sprintf("%v天", days)
 		t.interval(remainSeconds)
 	} else if seconds > 3600 {
 		hours := int(seconds / 3600)
 		remainSeconds := seconds % 3600
-		t.Result += fmt.Sprintf("%vh", hours)
+		t.Result += fmt.Sprintf("%v时", hours)
 		t.interval(remainSeconds)
 	} else if seconds > 60 {
 		mins := int(seconds / 60)
 		remainSeconds := seconds % 60
-		t.Result += fmt.Sprintf("%vm", mins)
+		t.Result += fmt.Sprintf("%v分", mins)
 		t.interval(remainSeconds)
 	} else {
-		t.Result += fmt.Sprintf("%vs", seconds)
+		t.Result += fmt.Sprintf("%v秒", seconds)
 	}
 	return t.Result
 }
