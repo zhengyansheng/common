@@ -13,6 +13,14 @@ type Template struct {
 	Text string      // 模版文件
 }
 
+func NewTemplate(name string, data interface{}, text string) *Template {
+	return &Template{
+		Name: name,
+		Data: data,
+		Text: text,
+	}
+}
+
 func unescaped(str string) template.HTML { return template.HTML(str) }
 
 func (t *Template) ParseTpl() (tplData string, err error) {
